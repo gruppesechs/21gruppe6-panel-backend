@@ -5,15 +5,15 @@ module.exports = {
   },
   extends: [
     'airbnb-base',
+    'airbnb-typescript/base',
     'plugin:jsdoc/recommended',
   ],
-  parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 13,
+    project: './tsconfig.eslint.json',
     sourceType: 'module',
   },
   plugins: [
-    '@typescript-eslint',
     'jsdoc',
   ],
   rules: {

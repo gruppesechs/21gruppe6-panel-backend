@@ -1,7 +1,12 @@
 {
-    "extends": "fastify-tsconfig",
-    "compilerOptions": {
-        "outDir": "dist"
-    },
-    "include": ["src/**/*.ts"]
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "fastify-tsconfig",
+  "compilerOptions": {
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "outDir": "dist"
+  },
+  "include": [
+    "src/**/*.ts"
+  ]
 }
