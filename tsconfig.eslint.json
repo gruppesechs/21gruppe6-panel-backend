@@ -4,6 +4,7 @@
     "src/**/*.ts",
     "test/**/*.ts",
     ".eslintrc.js",
-    "commitlint.config.js"
+    "commitlint.config.js",
+    "prisma/seed.ts"
   ]
 }
