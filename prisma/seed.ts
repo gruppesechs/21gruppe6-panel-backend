@@ -108,6 +108,25 @@ async function main() {
     },
   });
 
+  await Promise.all([
+    { name: 'Benny\'s', weeklyFee: 90000, insuredPercentage: 75 },
+    { name: 'Black Cat', weeklyFee: 65000, insuredPercentage: 50 },
+    { name: 'Marlowe Vineyard', weeklyFee: 90000, insuredPercentage: 75 },
+    { name: 'La Ferme', weeklyFee: 90000, insuredPercentage: 75 },
+    { name: 'SHMS - Lumber Yard', weeklyFee: 60000, insuredPercentage: 50 },
+    { name: 'Ron Petroleum', weeklyFee: 65000, insuredPercentage: 50 },
+    { name: 'Los Santos Taxi', weeklyFee: 55000, insuredPercentage: 25 },
+    { name: 'Weazel News', weeklyFee: 65000, insuredPercentage: 50 },
+    { name: 'Pißwasser', weeklyFee: 65000, insuredPercentage: 50 },
+    { name: 'Humane Labs', weeklyFee: 70000, insuredPercentage: 50 },
+    { name: 'Rogers Salvage & Scrap', weeklyFee: 90000, insuredPercentage: 75 },
+    { name: 'Gouvernement (LSAS - EMS - LSPD - BCSO)', weeklyFee: 200000, insuredPercentage: 75 },
+  ].map((contract) => prisma.contract.upsert({
+    where: { name: contract.name },
+    update: {},
+    create: { ...contract },
+  })));
+
   await prisma.user.upsert({
     where: { email: 'tonio.denaro@discord.gg' },
     update: {},

@@ -74,7 +74,7 @@ model BriefcaseSaleHistory {
 
 model Contract {
   id                String            @id @default(cuid())
-  name              String
+  name              String            @unique
   weeklyFee         Int
   insuredPercentage Int
   createdAt         DateTime          @default(now())
