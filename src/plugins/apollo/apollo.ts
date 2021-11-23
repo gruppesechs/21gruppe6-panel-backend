@@ -44,5 +44,7 @@ export default fp<void>(async (fastify) => {
   });
 
   await server.start();
-  fastify.register(server.createHandler());
+  fastify.register(server.createHandler({
+    cors: false,
+  }));
 });
