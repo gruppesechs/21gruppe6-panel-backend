@@ -14,6 +14,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  USER
+  ADMIN
+}
+
 model User {
   id             String          @id @default(cuid())
   name           String          @unique
@@ -24,7 +29,7 @@ model User {
   position       Position        @relation(fields: [positionId], references: [id])
   positionId     String
   isDisabled     Boolean         @default(false)
-  isAdmin        Boolean         @default(false)
+  role           Role            @default(USER)
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
   briefcaseSales BriefcaseSale[]
@@ -44,13 +49,15 @@ model Position {
 }
 
 model BriefcaseMilestone {
-  id              String   @id @default(cuid())
-  position        Position @relation(fields: [positionId], references: [id])
+  id              String          @id @default(cuid())
+  position        Position        @relation(fields: [positionId], references: [id])
   positionId      String
   count           Int
   bonusPercentage Int
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  isActive        Boolean?        @unique
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  briefcaseSales  BriefcaseSale[]
 }
 
 model BriefcaseSale {
@@ -58,6 +65,10 @@ model BriefcaseSale {
   user                   User                   @relation(fields: [userId], references: [id])
   userId                 String
   count                  Int
+  briefcaseMilestone     BriefcaseMilestone     @relation(fields: [briefcaseMilestoneId], references: [id])
+  briefcaseMilestoneId   String
+  config                 Config                 @relation(fields: [configId], references: [id])
+  configId               String
   createdAt              DateTime               @default(now())
   updatedAt              DateTime               @updatedAt
   briefcaseSaleHistories BriefcaseSaleHistory[]
@@ -72,15 +83,27 @@ model BriefcaseSaleHistory {
   createdAt       DateTime      @default(now())
 }
 
+model Company {
+  id        String     @id @default(cuid())
+  name      String     @unique
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  contracts Contract[]
+}
+
 model Contract {
   id                String            @id @default(cuid())
-  name              String            @unique
+  company           Company           @relation(fields: [companyId], references: [id])
+  companyId         String
   weeklyFee         Int
   insuredPercentage Int
+  isActive          Boolean?
   createdAt         DateTime          @default(now())
   updatedAt         DateTime          @updatedAt
   contractPayments  ContractPayment[]
   transfers         Transfer[]
+
+  @@unique([companyId, isActive])
 }
 
 model ContractPayment {
@@ -94,6 +117,8 @@ model Transfer {
   id         String   @id @default(cuid())
   contract   Contract @relation(fields: [contractId], references: [id])
   contractId String
+  config     Config   @relation(fields: [configId], references: [id])
+  configId   String
   users      User[]
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
@@ -116,4 +141,15 @@ model Salary {
   amount    Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Config {
+  id                    String          @id @default(cuid())
+  briefcaseEmployeePart Int
+  contractEmployeePart  Int
+  isActive              Boolean?        @unique
+  createdAt             DateTime        @default(now())
+  updatedAt             DateTime        @updatedAt
+  transfers             Transfer[]
+  briefcaseSales        BriefcaseSale[]
 }

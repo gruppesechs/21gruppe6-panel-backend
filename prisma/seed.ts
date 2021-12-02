@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Role } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -7,7 +7,18 @@ const prisma = new PrismaClient();
  *
  */
 async function main() {
+  await prisma.config.upsert({
+    where: { isActive: true },
+    update: {},
+    create: {
+      briefcaseEmployeePart: 15,
+      contractEmployeePart: 80,
+      isActive: true,
+    },
+  });
+
   const cdiMilestones: { count: number, bonusPercentage: number }[] = [
+    { count: 0, bonusPercentage: 0 },
     { count: 600, bonusPercentage: 50 },
     { count: 900, bonusPercentage: 55 },
     { count: 1200, bonusPercentage: 60 },
@@ -72,6 +83,7 @@ async function main() {
       salaryPerQuarter: 180,
       briefcaseMilestones: {
         create: [
+          { count: 0, bonusPercentage: 0 },
           { count: 600, bonusPercentage: 35 },
           { count: 900, bonusPercentage: 40 },
           { count: 1200, bonusPercentage: 45 },
@@ -94,6 +106,7 @@ async function main() {
       salaryPerQuarter: 160,
       briefcaseMilestones: {
         create: [
+          { count: 0, bonusPercentage: 0 },
           { count: 600, bonusPercentage: 20 },
           { count: 900, bonusPercentage: 25 },
           { count: 1200, bonusPercentage: 30 },
@@ -121,10 +134,21 @@ async function main() {
     { name: 'Humane Labs', weeklyFee: 70000, insuredPercentage: 50 },
     { name: 'Rogers Salvage & Scrap', weeklyFee: 90000, insuredPercentage: 75 },
     { name: 'Gouvernement (LSAS - EMS - LSPD - BCSO)', weeklyFee: 200000, insuredPercentage: 75 },
-  ].map((contract) => prisma.contract.upsert({
-    where: { name: contract.name },
+  ].map((company) => prisma.company.upsert({
+    where: { name: company.name },
     update: {},
-    create: { ...contract },
+    create: {
+      name: company.name,
+      contracts:
+      {
+        create:
+        [{
+          weeklyFee: company.weeklyFee,
+          insuredPercentage: company.insuredPercentage,
+          isActive: true,
+        }],
+      },
+    },
   })));
 
   await prisma.user.upsert({
@@ -133,7 +157,7 @@ async function main() {
     create: {
       name: 'Tonio Denaro',
       email: 'tonio.denaro@discord.gg',
-      password: '',
+      password: 'provisioning:tonio',
       phoneNumber: '555-4141',
       position: {
         connect: {
@@ -141,7 +165,7 @@ async function main() {
         },
       },
       isDisabled: false,
-      isAdmin: true,
+      role: Role.ADMIN,
     },
   });
 }
