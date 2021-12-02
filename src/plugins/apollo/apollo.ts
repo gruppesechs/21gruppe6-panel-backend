@@ -3,9 +3,7 @@ import type { ApolloServerPlugin } from 'apollo-server-plugin-base';
 import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
 import type { FastifyInstance } from 'fastify';
 import fp from 'fastify-plugin';
-import { buildSchema } from 'type-graphql';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { resolvers } from '@generated/type-graphql';
+import { schema } from '../../graphql';
 
 /**
  * @param {FastifyInstance} fastify The fastify instance
@@ -27,12 +25,8 @@ function fastifyAppClosePlugin(fastify: FastifyInstance): ApolloServerPlugin {
  * This plugins adds the Apollo Server
  */
 export default fp<void>(async (fastify) => {
-  const schema = await buildSchema({
-    resolvers,
-    validate: false,
-  });
   const server = new ApolloServer({
-    schema,
+    schema: await schema,
     context: ({ request }) => ({
       prisma: fastify.prisma,
       user: request.user,
