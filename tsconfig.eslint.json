@@ -5,6 +5,7 @@
     "test/**/*.ts",
     ".eslintrc.js",
     "commitlint.config.js",
-    "prisma/seed.ts"
+    "prisma/seed.ts",
+    "scripts/**/*.ts"
   ]
 }

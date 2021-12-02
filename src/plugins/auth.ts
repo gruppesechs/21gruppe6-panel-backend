@@ -1,10 +1,37 @@
 /* eslint-disable max-len */
+import * as crypto from 'crypto';
 import fp from 'fastify-plugin';
 import auth from 'fastify-auth';
 import jwt, { FastifyJWTOptions } from 'fastify-jwt';
+import { promises as fs } from 'fs';
 import { FastifyInstance, FastifyRequest } from 'fastify';
+import * as path from 'path';
 import type { User } from '@prisma/client';
 import type { LoginRequest, RegisterRequest } from '../types/requests';
+
+interface KeyPair {
+  public: string | Buffer,
+  private: string | Buffer
+}
+
+/**
+ * @returns {KeyPair} The key paie.
+ */
+async function loadJWTKeyPair(): Promise<KeyPair> {
+  const jwk = await fs.readFile(`${path.join(__dirname, '..', '..', 'keys')}/privateKey.json`, 'utf8');
+
+  const privateKey = crypto.createPrivateKey({
+    key: JSON.parse(jwk),
+    format: 'jwk',
+  });
+
+  const publicKey = crypto.createPublicKey(privateKey);
+
+  return {
+    public: publicKey.export({ format: 'pem', type: 'spki' }),
+    private: privateKey.export({ format: 'pem', type: 'pkcs8' }),
+  };
+}
 
 /**
  * @param {FastifyInstance} this The fastify instance.
@@ -81,7 +108,7 @@ async function verifyUserAndProvisioningToken(this: FastifyInstance, request: Fa
 export default fp<FastifyJWTOptions>(async (fastify) => {
   fastify.register(auth);
   fastify.register(jwt, {
-    secret: 'zgegounet',
+    secret: await loadJWTKeyPair(),
   });
 
   fastify.decorate('verifyJWT', verifyJWT);
