@@ -1,15 +1,17 @@
 FROM node:17-alpine
 WORKDIR /app
 
-COPY package.json ./
-COPY package-lock.json ./
-COPY prisma/schema.prisma ./prisma/
-RUN npm ci --silent
+RUN apk --no-cache add curl
+RUN curl -f https://get.pnpm.io/v6.16.js | node - add --global pnpm
 
-COPY . ./
-RUN npm run build:ts
+COPY pnpm-lock.yaml ./
+RUN pnpm fetch
+
+ADD . ./
+RUN pnpm install -r --offline
+RUN pnpm run build:ts
 
 ENTRYPOINT [ "./entrypoint.sh" ]
-CMD [ "npm", "run", "start:prod" ]
+CMD [ "pnpm", "run", "start:prod" ]
 EXPOSE 3000
 VOLUME [ "/app/keys" ]
