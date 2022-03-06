@@ -73,7 +73,7 @@
     "husky": "7.0.4",
     "prisma": "3.8.1",
     "tap": "15.1.6",
-    "ts-node": "10.4.0",
+    "ts-node": "10.7.0",
     "typegraphql-prisma": "0.18.4",
     "typescript": "4.5.5"
   },

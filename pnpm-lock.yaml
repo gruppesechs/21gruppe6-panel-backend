@@ -42,7 +42,7 @@ specifiers:
   sodium-native: ^3.3.0
   sodium-plus: ^0.9.0
   tap: 15.1.6
-  ts-node: 10.4.0
+  ts-node: 10.7.0
   tslib: ^2.3.1
   type-graphql: ^1.1.1
   typegraphql-prisma: 0.18.4
@@ -93,8 +93,8 @@ devDependencies:
   fastify-tsconfig: 1.0.1
   husky: 7.0.4
   prisma: 3.8.1
-  tap: 15.1.6_ts-node@10.4.0+typescript@4.5.5
-  ts-node: 10.4.0_367793418afa917fddeb69e0b1aa8aae
+  tap: 15.1.6_ts-node@10.7.0+typescript@4.5.5
+  ts-node: 10.7.0_367793418afa917fddeb69e0b1aa8aae
   typegraphql-prisma: 0.18.4_129cbdfeb2a43bfca72e460124f14f20
   typescript: 4.5.5
 
@@ -1990,7 +1990,7 @@ packages:
     dependencies:
       '@types/node': 17.0.8
       cosmiconfig: 7.0.1
-      ts-node: 10.4.0_367793418afa917fddeb69e0b1aa8aae
+      ts-node: 10.7.0_367793418afa917fddeb69e0b1aa8aae
       typescript: 4.5.5
     transitivePeerDependencies:
       - '@swc/core'
@@ -5488,7 +5488,7 @@ packages:
       yaml: 1.10.2
     dev: true
 
-  /tap/15.1.6_ts-node@10.4.0+typescript@4.5.5:
+  /tap/15.1.6_ts-node@10.7.0+typescript@4.5.5:
     resolution: {integrity: sha512-TN7xH6Q2tUPTd6qwmkhuFJcx1vUR8e4dDUpBKc61G0krOzne7Ia6aKIFb8O/0kVazachSSuVME1V8nQ2xwWL8w==}
     engines: {node: '>=10'}
     hasBin: true
@@ -5525,7 +5525,7 @@ packages:
       tap-parser: 10.1.0
       tap-yaml: 1.0.0
       tcompare: 5.0.7
-      ts-node: 10.4.0_367793418afa917fddeb69e0b1aa8aae
+      ts-node: 10.7.0_367793418afa917fddeb69e0b1aa8aae
       typescript: 4.5.5
       which: 2.0.2
     transitivePeerDependencies:
@@ -5711,8 +5711,8 @@ packages:
       code-block-writer: 11.0.0
     dev: true
 
-  /ts-node/10.4.0_367793418afa917fddeb69e0b1aa8aae:
-    resolution: {integrity: sha512-g0FlPvvCXSIO1JDF6S232P5jPYqBkRL9qly81ZgAOSU7rwI0stphCgd2kLiCrU9DjQCrJMWEqcNSjQL02s6d8A==}
+  /ts-node/10.7.0_367793418afa917fddeb69e0b1aa8aae:
+    resolution: {integrity: sha512-TbIGS4xgJoX2i3do417KSaep1uRAW/Lu+WAL2doDHC0D6ummjirVOXU5/7aiZotbQ5p1Zp9tP7U6cYhA0O7M8A==}
     hasBin: true
     peerDependencies:
       '@swc/core': '>=1.2.50'
@@ -5738,6 +5738,7 @@ packages:
       diff: 4.0.2
       make-error: 1.3.6
       typescript: 4.5.5
+      v8-compile-cache-lib: 3.0.0
       yn: 3.1.1
     dev: true
 
@@ -5936,6 +5937,10 @@ packages:
   /uuid/8.3.2:
     resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
     hasBin: true
+
+  /v8-compile-cache-lib/3.0.0:
+    resolution: {integrity: sha512-mpSYqfsFvASnSn5qMiwrr4VKfumbPyONLCOPmsR3A6pTY/r0+tSaVbgPWSAIuzbk3lCTa+FForeTiO+wBQGkjA==}
+    dev: true
 
   /v8-compile-cache/2.3.0:
     resolution: {integrity: sha512-l8lCEmLcLYZh4nbunNZvQCJc5pv7+RCwa8q/LdUx8u7lsWvPDKmpodJAJNwkAhJC//dFY48KuIEmjtd4RViDrA==}
