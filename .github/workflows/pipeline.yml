@@ -22,7 +22,7 @@ jobs:
         uses: docker/metadata-action@v3
         with:
           images: |
-            ghcr.io/21gruppe6/21gruppe6-panel-backend
+            ghcr.io/gruppesechs/21gruppe6-panel-backend
           tags: |
             type=schedule
             type=ref,event=branch
